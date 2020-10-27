@@ -1,11 +1,16 @@
 package com.thoughtworks.capability.gtb.entrancequiz.service;
 
+import com.thoughtworks.capability.gtb.entrancequiz.model.Group;
 import com.thoughtworks.capability.gtb.entrancequiz.model.Person;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
+@Service
 public class GroupService {
-    private List<Person> persons;
+    private List<Person> persons = new ArrayList<>();
+    private List<Person> shuffled;
+    private List<Group> randomizedGroups = new ArrayList<>();
 
     public GroupService() {
         this.persons.add(new Person(1, "成吉思汗"));
@@ -23,6 +28,36 @@ public class GroupService {
         this.persons.add(new Person(13, "哪吒"));
         this.persons.add(new Person(14, "大乔"));
         this.persons.add(new Person(15, "蔡文姬"));
+        shuffled = new ArrayList<>(persons);
     }
-    
+
+    public List<Person> getAll() {
+        return persons;
+    }
+
+    public List<Group> randomizeAll() {
+        List<Group> randomizingResult = new ArrayList<>();
+        Collections.shuffle(shuffled);
+
+        int largerGroups = persons.size() % 6;
+
+        int n = 0;
+        for (int i = 0; i < 6; i++) {
+            List<Person> newGroup = new ArrayList<>();
+            int groupLimit = persons.size() / 6;
+            if (i < largerGroups) {
+                groupLimit = groupLimit + 1;
+            }
+            while (newGroup.size() < groupLimit) {
+                newGroup.add(shuffled.get(n++));
+            }
+            randomizingResult.add(new Group(i, newGroup));
+        }
+        return randomizingResult;
+    }
+
+    public void savePerson(String name) {
+        Person newPerson = new Person(persons.size(), name);
+        this.persons.add(newPerson);
+    }
 }

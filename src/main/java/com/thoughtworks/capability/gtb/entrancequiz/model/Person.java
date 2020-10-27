@@ -1,6 +1,9 @@
 package com.thoughtworks.capability.gtb.entrancequiz.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class Person {
+    @Autowired
     private Integer id;
     private String name;
 
