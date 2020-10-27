@@ -29,8 +29,8 @@ public class GroupController {
         return groupService.randomizeAll();
     }
 
-    @PostMapping("/add-member")
-    public void addMember(String name) {
+    @PostMapping(path = "/add-member")
+    public void addMember(@RequestBody String name) {
         groupService.savePerson(name);
     }
 }

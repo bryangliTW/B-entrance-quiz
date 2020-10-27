@@ -37,6 +37,7 @@ public class GroupService {
 
     public List<Group> randomizeAll() {
         List<Group> randomizingResult = new ArrayList<>();
+        shuffled = new ArrayList<>(persons);
         Collections.shuffle(shuffled);
 
         int largerGroups = persons.size() % 6;
@@ -57,7 +58,7 @@ public class GroupService {
     }
 
     public void savePerson(String name) {
-        Person newPerson = new Person(persons.size(), name);
+        Person newPerson = new Person(persons.size() + 1, name);
         this.persons.add(newPerson);
     }
 }
